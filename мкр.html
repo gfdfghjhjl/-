@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crafted Website</title>
+</head>
+<body class="body">
+    <h1 class="h1">Поточний Час</h1>
+    <div class="time" id="timeDisplay">--:--:--</div>
+    <button class="button" id="stopButton">Зупинити</button>
+    <button class="button" id="resumeButton">Відновити</button>
+
+    <script>
+        // Отримуємо посилання на елементи
+        const timeDisplay = document.getElementById('timeDisplay');
+        const stopButton = document.getElementById('stopButton');
+        const resumeButton = document.getElementById('resumeButton');
+
+        // Функція для оновлення часу
+        function updateTime() {
+            const now = new Date();
+            const formattedTime = now.toLocaleTimeString(); // Отримуємо час у форматі HH:MM:SS
+            timeDisplay.textContent = formattedTime;
+        }
+
+        // Інтервал для оновлення часу кожну секунду
+        let timer = setInterval(updateTime, 1000);
+
+        // Зупинка таймера при натисканні на кнопку
+        stopButton.addEventListener('click', () => {
+            clearInterval(timer);
+            stopButton.disabled = true;
+            resumeButton.disabled = false;
+        });
+
+        // Відновлення таймера при натисканні на кнопку
+        resumeButton.addEventListener('click', () => {
+            timer = setInterval(updateTime, 1000);
+            resumeButton.disabled = true;
+            stopButton.disabled = false;
+        });
+
+        // Початковий виклик для відображення часу одразу при завантаженні сторінки
+        updateTime();
+        resumeButton.disabled = true; // Відновлення недоступне спочатку
+
+        // Додавання функціональності для відстеження змін розмірів вікна
+        window.addEventListener('resize', () => {
+            const width = window.innerWidth; // Ширина вікна
+            const height = window.innerHeight; // Висота вікна
+            alert(`Новий розмір вікна: ${width}px x ${height}px`);
+        });
+    </script>
+</body>
+</html>
